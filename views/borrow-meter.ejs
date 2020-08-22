@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LaboMaster</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/send_url.js"></script>
+  </head>
+  <body>
+    <header>
+        <div class="header-logo">LaboMaster</div>
+        <div class="header-list">
+            <ul>
+                <li><a href="/">借りる・返す</a></li>
+                <li><a href="#">利用状況</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="top-wrapper">
+        <div class="equipmentdecision-headerbox">
+            <div class="push">
+                <div class="equipment-header">
+                    <h1>行動計を借りる</h1>
+                </div>
+            </div>
+        </div>
+        <div class="equipmentdecision-stickybox">
+            <div class="equipment-stickybox">
+                <img src="/images/meter.PNG">
+            </div>
+        </div>
+        <div class="equipmentdecision-selectionarea">
+            <div>
+                <div class="inlinetradeup-section">
+                    <div class="tradeupinline-selectionheader">
+                        <h2>ご利用になられる行動計の番号を選択してください</h2>
+                    </div>
+                    <div class="form-selecter">
+                            <% numbers.forEach((number) => { %>
+                                <div class="data">
+                                  <a class="id-column" href="/resister-meter/<%= number.id %>"><%= number.id %></a>
+                                </div>
+                            <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+    <footer>
+        <div class="footer-logo">LaboMaster</div>
+    </footer>
+    </body>
+</html>
