@@ -1,0 +1,297 @@
+html {
+    font-size: 100%;
+}
+
+html, body,
+form, input, div,
+ul, ol, li,
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Avenir Next", "Hiragino Kaku Gothic ProN W3", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+  }  
+
+li { 
+    list-style: none;
+}
+
+header {
+    height: 90px;
+    background-color: rgb(194,39,66);
+    color: white;
+}
+.header-logo {
+    float: left;
+    padding: 20px 40px;
+    font-size: 36px;
+}
+
+.header-list {
+    float: left;
+}
+
+.header-list li {
+    float: left;
+    padding: 33px 20px;
+}
+
+.contents {
+    margin-right: auto;
+    margin-bottom: 2.08333%;
+    margin-left: auto;
+    padding-top: 90px;
+    width: 980px;
+}
+
+.section-title {
+    margin-bottom: 52px;
+    text-align: center;
+    font-size: 48px;
+}
+
+.row {
+    width: 100%;
+    height: 500px;
+}
+
+.column-content {
+    float: left;
+    box-sizing: border-box;
+    padding: 0 20px;
+    width: 25%;
+}
+
+.contents-item img {
+    width: 157px;
+    height: 157px;
+}
+
+.btn-wrapper {
+    margin-top: 24px;
+}
+
+.btn {
+    padding: 4px 11px;
+    color: white;
+    display: inline-block;
+    opacity: 0.8;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 400;
+}
+  
+.btn:hover {
+    opacity: 1;
+}
+
+.borrow {
+    background-color: rgb(0,113,227);
+}
+
+.return {
+    background-color: rgb(208,14,49);
+}
+
+footer {
+    padding: 40px;
+    height: 120px;
+    background-color: rgb(217,41,79);
+    color: white;
+}
+
+.footer-logo {
+    float: left;
+    font-size: 32px;
+}
+
+.top-wrapper {
+    margin: 0 auto;
+    width: 980px;
+    height: 1320px;
+}
+
+.push {
+    position: relative;
+    left: 523px;
+    width: 41.66667%;
+}
+
+.equipment-header {
+    margin-top: 68px;
+}
+
+.equipment-header h1 {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.equipmentdecision-stickybox {
+    width: 50%;
+}
+
+.equipment-stickybox {
+    float: left;
+}
+
+.equipment-stickybox img {
+    width: 441px;
+}
+
+.equipmentdecision-selectionarea {
+    float: left;
+    margin-left: 8.33333%;
+    width: 41.66667%;
+}
+
+.inlinetradeup-section {
+    margin-top: 50px;
+}
+
+.tradeupinline-selectionheader {
+    margin-bottom: 8px;
+}
+
+.tradeupinline-selectionheader h2{
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.data {
+    margin-top: .82353rem;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+}
+
+.data a {
+    display: inline-block;
+    padding: 28px 15px;
+    width: 100%;
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
+}
+
+.resister-form, .return-form {
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 570px;
+    padding: 0 15px;
+}
+
+.resister-form__heading, .return-form__heading {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 23px;
+    color: rgb(20, 23, 26);
+    font-weight: bold;
+    font-family: "Segoe UI", Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.input-area-wrapper {
+    padding: 10px 15px;
+}
+
+.input-area-content {
+    border-bottom: 2px solid rgb(101, 119, 134);
+    background-color: rgb(245,248,250);
+}
+
+.input-heading {
+    display: inline-block;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 15px;
+    font-weight: 400;
+    color: rgb(101, 119, 134);
+}
+
+.input-heading:focus {
+    border-bottom-color: rgb(225,64,95);
+}
+
+.input-wrapper__input {
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 2px 10px 5px 10px;
+    width: 100%;
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.input-wrapper__input:focus {
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.resister-btn, .return-btn {
+    display: inline-block;
+    margin: 10px;
+    box-sizing: border-box;
+    width: 550px;
+    height: 49px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 9999px;
+    background-color:  rgb(225,64,95);
+    padding: 0 30px;
+    font-family: "Segoe UI", Meiryo, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: white;
+    font: 15px;
+    font-weight: bold;
+}
+
+.finish-wrapper { 
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    /* background: radial-gradient(white, rgb(173,217,228)); */
+}
+
+.finish-content {
+    margin: auto 0;
+    text-align: center;
+}
+
+.finish-content__heading {
+    margin-bottom: 24px;
+    font-family: Lato, "Hiragino Maru Gothic Pro", "Meiryo UI", Meiryo, "MS PGothic", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #475469;
+}
+
+.finish-content__btn {
+    display: inline-block;
+    padding: 15px 10px;
+    box-sizing: border-box;
+    width: 160px;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: rgb(225,64,95);;
+    box-shadow: 0 3px rgb(156, 51, 72);;
+    font-size: 0.875rem;
+    line-height: 1;
+    font-family: Lato, "Hiragino Maru Gothic Pro", "Meiryo UI", Meiryo, "MS PGothic", sans-serif;
+    font-weight: normal;
+}
+
+.fas {
+    display: inline-block;
+    color: white;
+    font-size: 20px;
+    margin-left: 16px;
+    margin-top: 4px;
+}
