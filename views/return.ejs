@@ -3,37 +3,44 @@
   <head>
     <meta charset="utf-8">
     <title>LaboMaster</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/stylesheet.css">
     <script src="/send_url.js"></script>
   </head>
   <body>
     <header>
-        <div class="header-logo">LaboMaster</div>
-        <div class="header-list">
-            <ul>
-                <li><a href="/">借りる・返す</a></li>
-                <li><a href="#">利用状況</a></li>
-            </ul>
-        </div>
+        <!-- <div class="container"> -->
+            <div class="header-logo">
+                <a href="/">LaboMaster</a>
+            </div>
+            <div class="header-list">
+                <ul>
+                    <li><a href="/">借りる・返す</a></li>
+                    <!-- <li><a href="#">利用状況</a></li> -->
+                </ul>
+            </div>
+        <!-- </div> -->
     </header>
-    <div class="return-form">
-        <h1 class="return-form__heading"><%= item.word %>を返す</h1>
-        <form action="/delete" method="post">
-            <div class="input-area-wrapper">
-                <div class="input-area-content">
-                    <div class="input-heading">
-                        返す<%= item.word %>の番号
-                    </div>
-                    <div class="input-wrapper">
-                        <input class="input-wrapper__input" type="int" name="id">
+    <div class="resister-form-wrapper">
+        <div class="container">
+            <div class="heading">
+                <p><%= item.word %>を返す</p>
+            </div>
+            <form action="/delete" method="post">
+                <div class="resister-forms">
+                    <div class="resister-form" id="focus">
+                        <div class="resister-form-txt-contents" tabindex="0">
+                            返す<%= item.word %>の番号
+                        </div>
+                        <div class="resister-form-input-area" >
+                            <input type="int" name="id">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="return-btn-wrapper">
-                <input class="return-btn" type="submit" value="返却する">
-            </div>
-        </form>
+                <div class="btn-wrapper resister-btn-wraper">
+                    <input class="resister-btn" type="submit" value="返却する">
+                </div>
+            </form>
+        </div>
     </div>
-        
   </body>
 </html>

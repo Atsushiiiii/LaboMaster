@@ -3,46 +3,55 @@
   <head>
     <meta charset="utf-8">
     <title>LaboMaster</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/stylesheet.css">
     <script src="/send_url.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
   </head>
   <body>
     <header>
-        <div class="header-logo">LaboMaster</div>
-        <div class="header-list">
-            <ul>
-                <li><a href="/">借りる・返す</a></li>
-                <li><a href="#">利用状況</a></li>
-            </ul>
-        </div>
+        <!-- <div class="container"> -->
+            <div class="header-logo">
+                <a href="/">LaboMaster</a>
+            </div>
+            <div class="header-list">
+                <ul>
+                    <li><a href="/">借りる・返す</a></li>
+                    <!-- <li><a href="#">利用状況</a></li> -->
+                </ul>
+            </div>
+        <!-- </div> -->
     </header>
-    <div class="resister-form">
-        <h1 class="resister-form__heading"><%= bango.id %>番の<%= bango.item %>を借りる</h1>
-        <form action="/update/<%= bango.id %>" method="post">
-            <div class="input-area-wrapper">
-                <div class="input-area-content">
-                    <div class="input-heading" tabindex="0">
-                        貸し出し者
+    <div class="resister-form-wrapper">
+        <div class="container">
+            <div class="heading">
+                <p><%= bango.id %>番の<%= bango.item %>を借りる</p>
+            </div>
+            <form action="/update/<%= bango.id %>" method="post">
+                <div class="resister-forms">
+                    <div class="resister-form" id="focus">
+                        <div class="resister-form-txt-contents" tabindex="0">
+                            貸し出し者
+                        </div>
+                        <div class="resister-form-input-area" >
+                            <input type="text" name="bangoLender">
+                        </div>
                     </div>
-                    <div class="input-wrapper">
-                        <input class="input-wrapper__input" type="text" name="bangoLender">
+                    <div class="resister-form" id="focus">
+                        <div class="resister-form-txt-contents">
+                            利用者
+                        </div>
+                        <div class="resister-form-input-area">
+                            <input type="text" name="bangoProprietary">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="input-area-wrapper">
-                <div class="input-area-content">
-                    <div class="input-heading">
-                        利用者
-                    </div>
-                    <div class="input-wrapper">
-                        <input class="input-wrapper__input" type="text" name="bangoProprietary">
-                    </div>
+                <div class="btn-wrapper resister-btn-wraper">
+                    <input class="resister-btn" type="submit" value="登録する">
                 </div>
-            </div>
-            <div class="resister-btn-wrapper">
-                <input class="resister-btn" type="submit" value="登録する">
-            </div>
-        </form>
-    </div>      
+            </form>
+        </div>
+    </div> 
+    <script type="text/javascript" src="script.js"></script>  
   </body>
 </html>
