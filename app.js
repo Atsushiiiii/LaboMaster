@@ -201,7 +201,7 @@ app.post('/sleep', (req, res) => {
     [req.body.sleep],
     (error, results) => {
       connection.query(
-        'select * from times where name = ? and wake = "0000-00-00 00:00:00"',
+        'select * from times where name = ? and wake is null',
         [req.body.sleep],
         (error, results) => {
           console.log(results);
