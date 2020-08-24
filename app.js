@@ -195,4 +195,35 @@ app.post('/delete', (req, res) => {
   }
 });
 
+app.post('/sleep', (req, res) => {
+  connection.query(
+    'insert into times(name, sleep) VALUES (?, now())',
+    [req.body.sleep],
+    (error, results) => {
+      connection.query(
+        'select * from times where name = ? and wake = "0000-00-00 00:00:00"',
+        [req.body.sleep],
+        (error, results) => {
+          console.log(results);
+          res.render('wake.ejs', {identification: results[0]});
+        }
+      );
+    }
+  );
+});
+
+app.post('/wake/:id', (req, res) => {
+  connection.query(
+    'update times set wake = now() where id = ?',
+    [req.params.id],
+    (error, results) => {
+      res.redirect('/wake')
+    }
+  )
+});
+
+app.get('/wake', (req, res) => {
+  res.render('sleep.ejs')
+});
+
 app.listen(process.env.PORT || 3000);
