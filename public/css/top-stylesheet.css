@@ -1,0 +1,31 @@
+html {
+    font-size: 100%;
+}
+
+html, body,
+form, input, div,
+ul, ol, li,
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Avenir Next", "Hiragino Kaku Gothic ProN W3", sans-serif;
+}
+
+a {
+    text-decoration: none;
+  }  
+
+li { 
+    list-style: none;
+}
+
+.sleep-wrapper {
+    text-align: center;
+}
+
+.sleep-wrapper p {
+    padding-top: 50px;
+}
