@@ -195,35 +195,40 @@ app.post('/delete', (req, res) => {
   }
 });
 
-app.post('/sleep', (req, res) => {
+app.get('/select_number', (req, res) => {
   connection.query(
-    'insert into times(name, sleep) VALUES (?, now())',
-    [req.body.sleep],
+    'select * from meters where lender is not null',
     (error, results) => {
-      connection.query(
-        'select * from times where name = ? and wake is null',
-        [req.body.sleep],
-        (error, results) => {
-          console.log(results);
-          res.render('wake.ejs', {identification: results[0]});
-        }
-      );
+      res.render('sleep.ejs', {numbers: results});
     }
   );
 });
 
-app.post('/wake/:id', (req, res) => {
+app.get('/resister_sleep/:id', (req, res) => {
+  connection.query(
+        'insert into times(number, sleep) values (?, now())',
+        [req.params.id],
+        (error, results) => {
+          connection.query(
+            'select id from times where number = ? and wake is null',
+            [req.params.id],
+            (error, results) => {
+              console.log(results);
+              res.render('wake.ejs', {identification: results[0]});
+            }
+          );
+        }
+  );
+});
+
+app.get('/resister_wake/:id', (req, res) => {
   connection.query(
     'update times set wake = now() where id = ?',
     [req.params.id],
     (error, results) => {
-      res.redirect('/wake')
+      res.redirect('/select_number');
     }
-  )
-});
-
-app.get('/wake', (req, res) => {
-  res.render('sleep.ejs')
+  );
 });
 
 app.listen(process.env.PORT || 3000);
