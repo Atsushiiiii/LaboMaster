@@ -3,15 +3,14 @@
     <head>
         <meta charset="utf-8">
         <title>LaboMaster</title>
-        <link rel="stylesheet" href="/css/top-stylesheet.css">
+        <link rel="stylesheet" href="/css/stylesheet.css">
         <script src="/send_url.js"></script>
     </head>
     <body>
-        <div class="sleep-wrapper">
-            <p>起床直後に「起きました」を押してください</p>
-            <form action="/wake/<%= identification.id %>" method="post">
-                <input type="submit" value="起きました">
-            </form>
-        </div>
+        <div class="finish-wrapper">
+            <div class="finish-content"> 
+              <a href="/resister_wake/<%= identification.id %>" class="finish-content__btn">起床しました</a>
+            </div>
+          </div>
     </body>
 </html>
