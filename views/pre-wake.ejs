@@ -2,8 +2,10 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LaboMaster</title>
         <link rel="stylesheet" href="/css/stylesheet.css">
+        <link rel="stylesheet" href="/css/responsive.css">
         <script src="/send_url.js"></script>
     </head>
     <body>
@@ -12,13 +14,13 @@
                 <div class="header-logo">
                     <a href="/">LaboMaster</a>
                 </div>
-                <div class="header-list">
+                <!-- <div class="header-list">
                     <ul>
                         <li><a href="/">借りる・返す</a></li>
                         <li><a href="/select_number">時刻計測</a></li>
                         <li><a href="/select_number_miss">起床時刻計測</a></li>
                     </ul>
-                </div>
+                </div> -->
             <!-- </div> -->
         </header>
         <div class="equipmentdecision-selectionarea">
@@ -30,7 +32,7 @@
                     <div class="form-selecter">
                         <% numbers.forEach((number) => { %>
                             <div class="data">
-                                <a class="id-column" href="/resister_sleep/<%= number.id %>"><%= number.id %></a>
+                                <a class="id-column" href="/select_id/<%= number.id %>"><%= number.id %></a>
                             </div>
                         <% }) %>
                     </div>

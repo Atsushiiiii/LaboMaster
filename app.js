@@ -5,13 +5,6 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
 
-// const connection = mysql.createConnection({
-//   host: 'us-cdbr-east-02.cleardb.com',
-//   user: 'bf713e8bc55e84',
-//   password: '9948d363',
-//   database: 'heroku_8364a5dc665cd43'
-// });
-
 var db_config = {
   host: 'us-cdbr-east-02.cleardb.com',
   user: 'bf713e8bc55e84',
@@ -46,14 +39,6 @@ function handleDisconnect() {
 }
 
 handleDisconnect();
-
-// connection.connect((err) => {
-//   if (err) {
-//     console.log('error connecting: ' + err.stack);
-//     return;
-//   }
-//   console.log('success');
-// });
 
 app.get('/', (req, res) => {
   res.render('top.ejs')
@@ -227,6 +212,26 @@ app.get('/resister_wake/:id', (req, res) => {
     [req.params.id],
     (error, results) => {
       res.redirect('/select_number');
+    }
+  );
+});
+
+app.get('/select_number_miss', (req, res) => {
+  connection.query(
+    'select * from meters where lender is not null',
+    (error, results) => {
+      res.render('pre-wake.ejs', {numbers: results});
+    }
+  );
+});
+
+app.get('/select_id/:id', (req, res) => {
+  connection.query(
+    'select id from times where number = ? and wake is null ',
+    [req.params.id],
+    (error, results) => {
+      console.log(results);
+      res.render('wake.ejs', {identification: results[0]});
     }
   );
 });
