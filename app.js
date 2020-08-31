@@ -206,7 +206,7 @@ app.get('/select_number', (req, res) => {
 
 app.get('/resister_sleep/:id', (req, res) => {
   connection.query(
-        'insert into times(number, sleep) values (?, (now() + 9))',
+        'insert into times(number, sleep) values (?, localtimestamp)',
         [req.params.id],
         (error, results) => {
           connection.query(
