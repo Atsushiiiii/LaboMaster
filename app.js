@@ -85,7 +85,7 @@ app.get('/resister-meter/:id', (req, res) => {
 });
 
 app.post('/update/:id', (req, res) => {
-  if (20 >= req.body.params) {
+  if (12 >= req.params.id) {
     connection.query(
       'update kagi set lender = ?, proprietary = ? where id = ?',
       [req.body.bangoLender, req.body.bangoProprietary, req.params.id],
