@@ -10,6 +10,10 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 0;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: "Avenir Next", "Hiragino Kaku Gothic ProN W3", sans-serif;
 }
@@ -241,8 +245,25 @@ footer {
 
 .equipmentdecision-selectionarea {
     float: left;
-    margin-left: 8.33333%;
+    padding-left: 8.33333%;
     width: 41.66667%;
+}
+
+.login-registrationBoldLink {
+    font-weight: 700;
+    text-align: left;
+    display: block;
+    font-size: 14px;
+    height: 24px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #085ff7;
+    letter-spacing: 0;
+    line-height: 1.38;
+}
+  
+.login-registrationBoldLink:hover {
+    text-decoration: underline;
 }
 
 .inlinetradeup-section {
@@ -308,3 +329,4 @@ footer {
     font-family: Lato, "Hiragino Maru Gothic Pro", "Meiryo UI", Meiryo, "MS PGothic", sans-serif;
     font-weight: normal;
 }
+
