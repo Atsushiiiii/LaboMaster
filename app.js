@@ -5,40 +5,20 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
 
-var db_config = {
-  host: 'us-cdbr-east-02.cleardb.com',
-  user: 'bf713e8bc55e84',
-  password: '9948d363',
-  database: 'heroku_8364a5dc665cd43'
-};
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '1202_Grado',
+  database: 'labomaster'
+});
 
-var connection;
-
-function handleDisconnect() {
-  console.log('INFO.CONNECTION_DB: ');
-  connection = mysql.createConnection(db_config);
-  
-  //connection取得
-  connection.connect(function(err) {
-      if (err) {
-          console.log('ERROR.CONNECTION_DB: ', err);
-          setTimeout(handleDisconnect, 1000);
-      }
-  });
-  
-  //error('PROTOCOL_CONNECTION_LOST')時に再接続
-  connection.on('error', function(err) {
-      console.log('ERROR.DB: ', err);
-      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-          console.log('ERROR.CONNECTION_LOST: ', err);
-          handleDisconnect();
-      } else {
-          throw err;
-      }
-  });
-}
-
-handleDisconnect();
+connection.connect((err) => {
+  if (err) {
+    console.log('error connecting: ' + err.stack);
+    return;
+  }
+  console.log('success');
+});
 
 app.get('/', (req, res) => {
   res.render('top.ejs')
@@ -46,46 +26,66 @@ app.get('/', (req, res) => {
 
 app.get('/borrow', (req, res) => {
   connection.query(
-    'select id from kagi where lender is null',
+    'select * from kagi where lender is null',
     (error, results) => {
-      res.render('borrow.ejs', {numbers: results});
+      res.render('borrow.ejs', {numbers: results, type: "鍵", algebra: 1});
     }
   );
 });
 
 app.get('/borrow-meter', (req, res) => {
   connection.query(
-    'select id from meters where lender is null',
+    'select * from meters where lender is null',
     (error, results) => {
-      res.render('borrow-meter.ejs', {numbers: results});
+      res.render('borrow.ejs', {numbers: results, type: "行動計", algebra: 2});
     }
   );
 });
 
-app.get('/resister/:id', (req, res) => {
+app.get('/borrow-fitbit', (req, res) => {
   connection.query(
-    'SELECT * FROM kagi WHERE id = ?',
-    [req.params.id],
+    'select * from fitbit where lender is null',
     (error, results) => {
-      console.log(results);
-      res.render('resister.ejs', {bango: results[0]});
+      res.render('borrow.ejs', {numbers: results, type: "Fitbit", algebra: 3});
     }
   );
 });
 
-app.get('/resister-meter/:id', (req, res) => {
-  connection.query(
-    'SELECT * FROM meters WHERE id = ?',
-    [req.params.id],
-    (error, results) => {
-      console.log(results);
-      res.render('resister.ejs', {bango: results[0]});
-    }
-  );
+app.get('/resister/:alg/:id', (req, res) => {
+  if (req.params.alg == 1) {
+    connection.query(
+      'SELECT * FROM kagi WHERE id = ?',
+      [req.params.id],
+      (error, results) => {
+        console.log(results);
+        res.render('resister.ejs', {bango: results[0]});
+      }
+    );
+
+  } else if (req.params.alg == 3) {
+    connection.query(
+      'SELECT * FROM fitbit WHERE id = ?',
+      [req.params.id],
+      (error, results) => {
+        console.log(results);
+        res.render('resister.ejs', {bango: results[0]});
+      }
+    );
+
+  } else if (req.params.alg == 2) {
+    connection.query(
+      'SELECT * FROM meters WHERE id = ?',
+      [req.params.id],
+      (error, results) => {
+        console.log(results);
+        res.render('resister.ejs', {bango: results[0]});
+      }
+    );
+  }
 });
 
 app.post('/update/:id', (req, res) => {
-  if (12 >= req.params.id) {
+  if (req.body.type == "鍵") {
     connection.query(
       'update kagi set lender = ?, proprietary = ? where id = ?',
       [req.body.bangoLender, req.body.bangoProprietary, req.params.id],
@@ -93,13 +93,27 @@ app.post('/update/:id', (req, res) => {
         connection.query(
           'select * from html where id = 1',
           (error, results) => {
-            console.log(results);
             res.render('display.ejs', {status: results[0]});
           }        
         );
       }
     );
-  } else {
+
+  } else if (req.body.type == "Fitbit") {
+    connection.query(
+      'update fitbit set lender = ?, proprietary = ? where id = ?',
+      [req.body.bangoLender, req.body.bangoProprietary, req.params.id],
+      (error, results) => {
+        connection.query(
+          'select * from html where id = 1',
+          (error, results) => {
+            res.render('display.ejs', {status: results[0]});
+          }        
+        );
+      }
+    );
+
+  } else if (req.body.type == "行動計") {
     connection.query(
       'update meters set lender = ?, proprietary = ? where id = ?',
       [req.body.bangoLender, req.body.bangoProprietary, req.params.id],
@@ -107,7 +121,6 @@ app.post('/update/:id', (req, res) => {
         connection.query(
           'select * from html where id = 1',
           (error, results) => {
-            console.log(results);
             res.render('display.ejs', {status: results[0]});
           }        
         );
@@ -136,8 +149,18 @@ app.get('/return-meter', (req, res) => {
   );
 });
 
+app.get('/return-fitbit', (req, res) => {
+  connection.query(
+    'select * from html where id = 5',
+    (error, results) => {
+      console.log(results);
+      res.render('return.ejs', {item: results[0]});
+    }
+  );
+});
+
 app.post('/delete', (req, res) => {
-  if (20 >= req.body.id) {
+  if (req.body.type == "鍵") {
     connection.query(
       'delete from kagi where id = ?',
       [req.body.id],
@@ -157,7 +180,28 @@ app.post('/delete', (req, res) => {
         );
       }
     );
-  } else {
+  } else if (req.body.type == "Fitbit") {
+    connection.query(
+      'delete from fitbit where id = ?',
+      [req.body.id],
+      (error, results) => {
+        connection.query(
+          'insert into fitbit (id, item) values (?, "Fitbit")',
+          [req.body.id],
+          (error, results) => {
+            connection.query(
+              'select * from html where id = 2',
+              (error, results) => {
+                console.log(results);
+                res.render('display.ejs', {status: results[0]});
+              }
+            );
+          }
+        );
+      }
+    );
+
+  } else if (req.body.type == "行動計") {
     connection.query(
       'delete from meters where id = ?',
       [req.body.id],
@@ -195,7 +239,7 @@ app.get('/resister_sleep/:id', (req, res) => {
         [req.params.id],
         (error, results) => {
           connection.query(
-            'select id from times where number = ? and wake is null',
+            'select id from times where number = ? and wake is null ',
             [req.params.id],
             (error, results) => {
               console.log(results);
@@ -236,4 +280,4 @@ app.get('/select_id/:id', (req, res) => {
   );
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(3000);
