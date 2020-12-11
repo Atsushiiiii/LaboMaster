@@ -5,20 +5,40 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1202_Grado',
-  database: 'labomaster'
-});
+var db_config = {
+  host: 'us-cdbr-east-02.cleardb.com',
+  user: 'bf713e8bc55e84',
+  password: '9948d363',
+  database: 'heroku_8364a5dc665cd43'
+};
 
-connection.connect((err) => {
-  if (err) {
-    console.log('error connecting: ' + err.stack);
-    return;
-  }
-  console.log('success');
-});
+var connection;
+
+function handleDisconnect() {
+  console.log('INFO.CONNECTION_DB: ');
+  connection = mysql.createConnection(db_config);
+  
+  //connection取得
+  connection.connect(function(err) {
+      if (err) {
+          console.log('ERROR.CONNECTION_DB: ', err);
+          setTimeout(handleDisconnect, 1000);
+      }
+  });
+  
+  //error('PROTOCOL_CONNECTION_LOST')時に再接続
+  connection.on('error', function(err) {
+      console.log('ERROR.DB: ', err);
+      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+          console.log('ERROR.CONNECTION_LOST: ', err);
+          handleDisconnect();
+      } else {
+          throw err;
+      }
+  });
+}
+
+handleDisconnect();
 
 app.get('/', (req, res) => {
   res.render('top.ejs')
@@ -280,4 +300,4 @@ app.get('/select_id/:id', (req, res) => {
   );
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
