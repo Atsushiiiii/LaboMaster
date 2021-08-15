@@ -40,8 +40,13 @@ function handleDisconnect() {
 
 handleDisconnect();
 
-app.get('/', (req, res) => {
-  res.render('top.ejs')
+app.get('/borrow-sleep', (req, res) => {
+  connection.query(
+    'select * from sleep where lender is null',
+    (error, results) => {
+      res.render('borrow.ejs', {numbers: results, type: "Sleep", algebra: 4});
+    }
+  );
 });
 
 app.get('/borrow', (req, res) => {
@@ -58,15 +63,6 @@ app.get('/borrow-meter', (req, res) => {
     'select * from meters where lender is null',
     (error, results) => {
       res.render('borrow.ejs', {numbers: results, type: "行動計", algebra: 2});
-    }
-  );
-});
-
-app.get('/borrow-fitbit', (req, res) => {
-  connection.query(
-    'select * from fitbit where lender is null',
-    (error, results) => {
-      res.render('borrow.ejs', {numbers: results, type: "Fitbit", algebra: 3});
     }
   );
 });
@@ -95,6 +91,16 @@ app.get('/resister/:alg/:id', (req, res) => {
   } else if (req.params.alg == 2) {
     connection.query(
       'SELECT * FROM meters WHERE id = ?',
+      [req.params.id],
+      (error, results) => {
+        console.log(results);
+        res.render('resister.ejs', {bango: results[0]});
+      }
+    );
+
+  } else if (req.params.alg == 4) {
+    connection.query(
+      'SELECT * FROM sleep WHERE id = ?',
       [req.params.id],
       (error, results) => {
         console.log(results);
@@ -146,6 +152,20 @@ app.post('/update/:id', (req, res) => {
         );
       }
     );
+
+  } else if (req.body.type == "Sleep") {
+    connection.query(
+      'update sleep set lender = ?, proprietary = ? where id = ?',
+      [req.body.bangoLender, req.body.bangoProprietary, req.params.id],
+      (error, results) => {
+        connection.query(
+          'select * from html where id = 1',
+          (error, results) => {
+            res.render('display.ejs', {status: results[0]});
+          }        
+        );
+      }
+    );
   } 
 });
 
@@ -172,6 +192,16 @@ app.get('/return-meter', (req, res) => {
 app.get('/return-fitbit', (req, res) => {
   connection.query(
     'select * from html where id = 5',
+    (error, results) => {
+      console.log(results);
+      res.render('return.ejs', {item: results[0]});
+    }
+  );
+});
+
+app.get('/return-sleep', (req, res) => {
+  connection.query(
+    'select * from html where id = 6',
     (error, results) => {
       console.log(results);
       res.render('return.ejs', {item: results[0]});
@@ -241,7 +271,64 @@ app.post('/delete', (req, res) => {
         );
       }
     );
+
+  } else if (req.body.type == "Sleep") {
+    connection.query(
+      'delete from sleep where id = ?',
+      [req.body.id],
+      (error, results) => {
+        connection.query(
+          'insert into sleep (id, item) values (?, "Sleep")',
+          [req.body.id],
+          (error, results) => {
+            connection.query(
+              'select * from html where id = 2',
+              (error, results) => {
+                console.log(results);
+                res.render('display.ejs', {status: results[0]});
+              }
+            );
+          }
+        );
+      }
+    );
   }
+});
+
+app.get('/view_fitbit_lending_status', (req, res) => {
+  connection.query(
+    'select * from fitbit',
+    (error, results) => {
+      res.render('lending_status.ejs', {equipments: results});
+    }
+  );
+});
+
+app.get('/view_sleep_lending_status', (req, res) => {
+  connection.query(
+    'select * from sleep',
+    (error, results) => {
+      res.render('lending_status.ejs', {equipments: results});
+    }
+  );
+});
+
+app.get('/view_kagi_lending_status', (req, res) => {
+  connection.query(
+    'select * from kagi',
+    (error, results) => {
+      res.render('lending_status.ejs', {equipments: results});
+    }
+  );
+});
+
+app.get('/view_meters_lending_status', (req, res) => {
+  connection.query(
+    'select * from meters',
+    (error, results) => {
+      res.render('lending_status.ejs', {equipments: results});
+    }
+  );
 });
 
 app.get('/select_number', (req, res) => {

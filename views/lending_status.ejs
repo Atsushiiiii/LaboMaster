@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>LaboMaster</title>
+        <link rel="stylesheet" href="/css/stylesheet.css">
+        <script src="/send_url.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <!-- <div class="container"> -->
+                <div class="header-logo">
+                    <a href="/">LaboMaster</a>
+                </div>
+                <div class="header-list">
+                    <ul>
+                        <li><a href="/view_fitbit_lending_status">備品状態</a></li>
+                    </ul>
+                </div>
+            <!-- </div> -->
+        </header>
+        <div class="top-wrapper">
+            <div class="equipment-condition-header">
+                <select onChange="location.href=value;" id="pull-down">
+                    <option value='/view_fitbit_lending_status'>Fitbit</option>
+                    <option value="/view_sleep_lending_status">Sleep</option>
+                    <option value='/view_kagi_lending_status'>鍵</option>
+                    <option value='/view_meters_lending_status'>行動計</option>
+                </select>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="first-column">番号</th>
+                        <th>備品状態</th>
+                        <th>使用者</th>
+                        <th>貸出者</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% equipments.forEach((equipment) => { %>
+                        <% if (equipment.proprietary == null) { %>
+                            <tr style="background-color:#e3f3f9">
+                                <td class="first-column"><%= equipment.id %></td>
+                                <td style='color:#0c7ea9'>在庫</td>
+                                <td><%= equipment.proprietary %></td>
+                                <td><%= equipment.lender %></td>
+                            </tr>
+
+                        <% } else { %>
+                            <tr style="background-color:#faf1f4">
+                                <td class="first-column"><%= equipment.id %></td>
+                                <td style='color:#c22162'>貸出中</td>
+                                <td><%= equipment.proprietary %></td>
+                                <td><%= equipment.lender %></td>
+                            </tr>
+
+                        <% } %>
+                    <% }) %>
+                </tbody>
+            </table>
+            <div hidden class="item"><%= equipments[0].item %></div>
+        </div>    
+    </body>
+</html>
+
+<script type="text/javascript">
+
+    var select = document.getElementById('pull-down');
+
+    if ($('.item').text() == 'Fitbit') {
+        select.options[0].selected = true;
+
+    } else if ($('.item').text() == 'Sleep') {
+        select.options[1].selected = true;
+
+    } else if ($('.item').text() == '鍵') {
+        select.options[2].selected = true;
+
+    } else if ($('.item').text() == '行動計') {
+        select.options[3].selected = true;
+
+    }
+
+</script>  
